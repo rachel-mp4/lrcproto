@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option go_package = "github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpb";
+
 message Event {
 	oneof msg {
 		Ping ping = 1;
