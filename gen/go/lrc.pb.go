@@ -697,9 +697,9 @@ func (x *Unmute) GetId() uint32 {
 
 type Set struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Nick          string                 `protobuf:"bytes,1,opt,name=nick,proto3" json:"nick,omitempty"`
-	ExternalID    string                 `protobuf:"bytes,2,opt,name=externalID,proto3" json:"externalID,omitempty"`
-	Color         uint32                 `protobuf:"varint,3,opt,name=color,proto3" json:"color,omitempty"`
+	Nick          *string                `protobuf:"bytes,1,opt,name=nick,proto3,oneof" json:"nick,omitempty"`
+	ExternalID    *string                `protobuf:"bytes,2,opt,name=externalID,proto3,oneof" json:"externalID,omitempty"`
+	Color         *uint32                `protobuf:"varint,3,opt,name=color,proto3,oneof" json:"color,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -735,22 +735,22 @@ func (*Set) Descriptor() ([]byte, []int) {
 }
 
 func (x *Set) GetNick() string {
-	if x != nil {
-		return x.Nick
+	if x != nil && x.Nick != nil {
+		return *x.Nick
 	}
 	return ""
 }
 
 func (x *Set) GetExternalID() string {
-	if x != nil {
-		return x.ExternalID
+	if x != nil && x.ExternalID != nil {
+		return *x.ExternalID
 	}
 	return ""
 }
 
 func (x *Set) GetColor() uint32 {
-	if x != nil {
-		return x.Color
+	if x != nil && x.Color != nil {
+		return *x.Color
 	}
 	return 0
 }
@@ -1104,13 +1104,16 @@ const file_lrc_proto_rawDesc = "" +
 	"\x04Mute\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"\x18\n" +
 	"\x06Unmute\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"O\n" +
-	"\x03Set\x12\x12\n" +
-	"\x04nick\x18\x01 \x01(\tR\x04nick\x12\x1e\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"\x80\x01\n" +
+	"\x03Set\x12\x17\n" +
+	"\x04nick\x18\x01 \x01(\tH\x00R\x04nick\x88\x01\x01\x12#\n" +
 	"\n" +
-	"externalID\x18\x02 \x01(\tR\n" +
-	"externalID\x12\x14\n" +
-	"\x05color\x18\x03 \x01(\rR\x05color\"9\n" +
+	"externalID\x18\x02 \x01(\tH\x01R\n" +
+	"externalID\x88\x01\x01\x12\x19\n" +
+	"\x05color\x18\x03 \x01(\rH\x02R\x05color\x88\x01\x01B\a\n" +
+	"\x05_nickB\r\n" +
+	"\v_externalIDB\b\n" +
+	"\x06_color\"9\n" +
 	"\x03Get\x12\x14\n" +
 	"\x05topic\x18\x01 \x01(\tR\x05topic\x12\x1c\n" +
 	"\tconnected\x18\x02 \x01(\rR\tconnected\">\n" +
@@ -1214,6 +1217,7 @@ func file_lrc_proto_init() {
 		(*Event_Ban)(nil),
 		(*Event_Unban)(nil),
 	}
+	file_lrc_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

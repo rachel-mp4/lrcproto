@@ -3,93 +3,83 @@ syntax = "proto3";
 option go_package = "github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpb";
 
 message Event {
-	oneof msg {
-		Ping ping = 1;
-		Pong pong = 2;
-		Init init = 3;
-    	Pub pub = 4;
-    	Insert insert = 5;
-    	Delete delete = 6;
-    	Mute mute = 7;
-    	Unmute unmute = 8;
-    	Set set = 9;
-    	Get get = 10;
-    	Kick kick = 11;
-    	Hug hug = 12;
-    	Ban ban = 13;
-    	Unban unban = 14;
-	}
+  oneof msg {
+    Ping ping = 1;
+    Pong pong = 2;
+    Init init = 3;
+    Pub pub = 4;
+    Insert insert = 5;
+    Delete delete = 6;
+    Mute mute = 7;
+    Unmute unmute = 8;
+    Set set = 9;
+    Get get = 10;
+    Kick kick = 11;
+    Hug hug = 12;
+    Ban ban = 13;
+    Unban unban = 14;
+  }
 }
 
-message Ping {
-}
+message Ping {}
 
-message Pong {
-}
+message Pong {}
 
 message Init {
-	uint32 id = 1;
-	string nick = 2;
-	string externalID = 3;
-	uint32 color = 4;
-	bool echoed = 5;
+  uint32 id = 1;
+  string nick = 2;
+  string externalID = 3;
+  uint32 color = 4;
+  bool echoed = 5;
 }
 
-message Pub {
-	uint32 id = 1;
-}
+message Pub { uint32 id = 1; }
 
 message Insert {
-	uint32 id = 1;
-	string body = 2;
-	uint32 byteIndex = 3;
+  uint32 id = 1;
+  string body = 2;
+  uint32 byteIndex = 3;
 }
 
 message Delete {
-	uint32 id = 1;
-	uint32 byteStart = 2;
-	uint32 byteEnd = 3;
+  uint32 id = 1;
+  uint32 byteStart = 2;
+  uint32 byteEnd = 3;
 }
 
-message Mute {
-	uint32 id = 1;
-}
+message Mute { uint32 id = 1; }
 
-message Unmute {
-	uint32 id = 1;
-}
+message Unmute { uint32 id = 1; }
 
 message Set {
-	string nick = 1;
-	string externalID = 2;
-	uint32 color = 3;
+  optional string nick = 1;
+  optional string externalID = 2;
+  optional uint32 color = 3;
 }
 
 message Get {
-	string topic = 1;
-	uint32 connected = 2;
+  string topic = 1;
+  uint32 connected = 2;
 }
 
 message Sudo {
-	string externalID = 1;
-	string secret = 2;
+  string externalID = 1;
+  string secret = 2;
 }
 
 message Kick {
-	Sudo privileges = 1;
-	uint32 id = 2;
+  Sudo privileges = 1;
+  uint32 id = 2;
 }
 
-message Hug {
-	uint32 id = 1;
-}
+message Hug { uint32 id = 1; }
 
 message Ban {
-	Sudo privileges = 1;
-	uint32 id = 2;
+  Sudo privileges = 1;
+  uint32 id = 2;
 }
 
 message Unban {
-	Sudo privileges = 1;
-	uint32 id = 2;
+  Sudo privileges = 1;
+  uint32 id = 2;
 }
