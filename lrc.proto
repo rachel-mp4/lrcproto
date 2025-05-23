@@ -58,8 +58,8 @@ message Set {
 }
 
 message Get {
-  string topic = 1;
-  uint32 connected = 2;
+  optional string topic = 1;
+  optional uint32 connected = 2;
 }
 
 message Sudo {

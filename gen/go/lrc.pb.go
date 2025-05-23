@@ -757,8 +757,8 @@ func (x *Set) GetColor() uint32 {
 
 type Get struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Topic         string                 `protobuf:"bytes,1,opt,name=topic,proto3" json:"topic,omitempty"`
-	Connected     uint32                 `protobuf:"varint,2,opt,name=connected,proto3" json:"connected,omitempty"`
+	Topic         *string                `protobuf:"bytes,1,opt,name=topic,proto3,oneof" json:"topic,omitempty"`
+	Connected     *uint32                `protobuf:"varint,2,opt,name=connected,proto3,oneof" json:"connected,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -794,15 +794,15 @@ func (*Get) Descriptor() ([]byte, []int) {
 }
 
 func (x *Get) GetTopic() string {
-	if x != nil {
-		return x.Topic
+	if x != nil && x.Topic != nil {
+		return *x.Topic
 	}
 	return ""
 }
 
 func (x *Get) GetConnected() uint32 {
-	if x != nil {
-		return x.Connected
+	if x != nil && x.Connected != nil {
+		return *x.Connected
 	}
 	return 0
 }
@@ -1113,10 +1113,13 @@ const file_lrc_proto_rawDesc = "" +
 	"\x05color\x18\x03 \x01(\rH\x02R\x05color\x88\x01\x01B\a\n" +
 	"\x05_nickB\r\n" +
 	"\v_externalIDB\b\n" +
-	"\x06_color\"9\n" +
-	"\x03Get\x12\x14\n" +
-	"\x05topic\x18\x01 \x01(\tR\x05topic\x12\x1c\n" +
-	"\tconnected\x18\x02 \x01(\rR\tconnected\">\n" +
+	"\x06_color\"[\n" +
+	"\x03Get\x12\x19\n" +
+	"\x05topic\x18\x01 \x01(\tH\x00R\x05topic\x88\x01\x01\x12!\n" +
+	"\tconnected\x18\x02 \x01(\rH\x01R\tconnected\x88\x01\x01B\b\n" +
+	"\x06_topicB\f\n" +
+	"\n" +
+	"_connected\">\n" +
 	"\x04Sudo\x12\x1e\n" +
 	"\n" +
 	"externalID\x18\x01 \x01(\tR\n" +
@@ -1218,6 +1221,7 @@ func file_lrc_proto_init() {
 		(*Event_Unban)(nil),
 	}
 	file_lrc_proto_msgTypes[9].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
