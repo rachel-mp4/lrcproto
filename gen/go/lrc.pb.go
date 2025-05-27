@@ -445,7 +445,7 @@ func (x *Init) GetEchoed() bool {
 
 type Pub struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -481,8 +481,8 @@ func (*Pub) Descriptor() ([]byte, []int) {
 }
 
 func (x *Pub) GetId() uint32 {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return 0
 }
@@ -1095,9 +1095,10 @@ const file_lrc_proto_rawDesc = "" +
 	"\x05_nickB\r\n" +
 	"\v_externalIDB\b\n" +
 	"\x06_colorB\t\n" +
-	"\a_echoed\"\x15\n" +
-	"\x03Pub\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"X\n" +
+	"\a_echoed\"!\n" +
+	"\x03Pub\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01B\x05\n" +
+	"\x03_id\"X\n" +
 	"\x06Insert\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x12\n" +
 	"\x04body\x18\x02 \x01(\tR\x04body\x12\x1e\n" +
@@ -1232,6 +1233,7 @@ func file_lrc_proto_init() {
 		(*Event_Unban)(nil),
 	}
 	file_lrc_proto_msgTypes[3].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[4].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[5].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[6].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[9].OneofWrappers = []any{}

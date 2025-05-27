@@ -33,7 +33,7 @@ message Init {
   optional bool echoed = 5;
 }
 
-message Pub { uint32 id = 1; }
+message Pub { optional uint32 id = 1; }
 
 message Insert {
   optional uint32 id = 1;
