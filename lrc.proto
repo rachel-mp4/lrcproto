@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+package lrc.v1;
 option go_package = "github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpb";
 
 message Event {
@@ -26,25 +26,25 @@ message Ping {}
 message Pong {}
 
 message Init {
-  uint32 id = 1;
-  string nick = 2;
-  string externalID = 3;
-  uint32 color = 4;
-  bool echoed = 5;
+  optional uint32 id = 1;
+  optional string nick = 2;
+  optional string externalID = 3;
+  optional uint32 color = 4;
+  optional bool echoed = 5;
 }
 
 message Pub { uint32 id = 1; }
 
 message Insert {
-  uint32 id = 1;
+  optional uint32 id = 1;
   string body = 2;
-  uint32 byteIndex = 3;
+  uint32 utf16Index = 3;
 }
 
 message Delete {
-  uint32 id = 1;
-  uint32 byteStart = 2;
-  uint32 byteEnd = 3;
+  optional uint32 id = 1;
+  uint32 utf16Start = 2;
+  uint32 utf16End = 3;
 }
 
 message Mute { uint32 id = 1; }

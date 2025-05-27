@@ -369,11 +369,11 @@ func (*Pong) Descriptor() ([]byte, []int) {
 
 type Init struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Nick          string                 `protobuf:"bytes,2,opt,name=nick,proto3" json:"nick,omitempty"`
-	ExternalID    string                 `protobuf:"bytes,3,opt,name=externalID,proto3" json:"externalID,omitempty"`
-	Color         uint32                 `protobuf:"varint,4,opt,name=color,proto3" json:"color,omitempty"`
-	Echoed        bool                   `protobuf:"varint,5,opt,name=echoed,proto3" json:"echoed,omitempty"`
+	Id            *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	Nick          *string                `protobuf:"bytes,2,opt,name=nick,proto3,oneof" json:"nick,omitempty"`
+	ExternalID    *string                `protobuf:"bytes,3,opt,name=externalID,proto3,oneof" json:"externalID,omitempty"`
+	Color         *uint32                `protobuf:"varint,4,opt,name=color,proto3,oneof" json:"color,omitempty"`
+	Echoed        *bool                  `protobuf:"varint,5,opt,name=echoed,proto3,oneof" json:"echoed,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -409,36 +409,36 @@ func (*Init) Descriptor() ([]byte, []int) {
 }
 
 func (x *Init) GetId() uint32 {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return 0
 }
 
 func (x *Init) GetNick() string {
-	if x != nil {
-		return x.Nick
+	if x != nil && x.Nick != nil {
+		return *x.Nick
 	}
 	return ""
 }
 
 func (x *Init) GetExternalID() string {
-	if x != nil {
-		return x.ExternalID
+	if x != nil && x.ExternalID != nil {
+		return *x.ExternalID
 	}
 	return ""
 }
 
 func (x *Init) GetColor() uint32 {
-	if x != nil {
-		return x.Color
+	if x != nil && x.Color != nil {
+		return *x.Color
 	}
 	return 0
 }
 
 func (x *Init) GetEchoed() bool {
-	if x != nil {
-		return x.Echoed
+	if x != nil && x.Echoed != nil {
+		return *x.Echoed
 	}
 	return false
 }
@@ -489,9 +489,9 @@ func (x *Pub) GetId() uint32 {
 
 type Insert struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	Body          string                 `protobuf:"bytes,2,opt,name=body,proto3" json:"body,omitempty"`
-	ByteIndex     uint32                 `protobuf:"varint,3,opt,name=byteIndex,proto3" json:"byteIndex,omitempty"`
+	Utf16Index    uint32                 `protobuf:"varint,3,opt,name=utf16Index,proto3" json:"utf16Index,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -527,8 +527,8 @@ func (*Insert) Descriptor() ([]byte, []int) {
 }
 
 func (x *Insert) GetId() uint32 {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return 0
 }
@@ -540,18 +540,18 @@ func (x *Insert) GetBody() string {
 	return ""
 }
 
-func (x *Insert) GetByteIndex() uint32 {
+func (x *Insert) GetUtf16Index() uint32 {
 	if x != nil {
-		return x.ByteIndex
+		return x.Utf16Index
 	}
 	return 0
 }
 
 type Delete struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            uint32                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	ByteStart     uint32                 `protobuf:"varint,2,opt,name=byteStart,proto3" json:"byteStart,omitempty"`
-	ByteEnd       uint32                 `protobuf:"varint,3,opt,name=byteEnd,proto3" json:"byteEnd,omitempty"`
+	Id            *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	Utf16Start    uint32                 `protobuf:"varint,2,opt,name=utf16Start,proto3" json:"utf16Start,omitempty"`
+	Utf16End      uint32                 `protobuf:"varint,3,opt,name=utf16End,proto3" json:"utf16End,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -587,22 +587,22 @@ func (*Delete) Descriptor() ([]byte, []int) {
 }
 
 func (x *Delete) GetId() uint32 {
-	if x != nil {
-		return x.Id
+	if x != nil && x.Id != nil {
+		return *x.Id
 	}
 	return 0
 }
 
-func (x *Delete) GetByteStart() uint32 {
+func (x *Delete) GetUtf16Start() uint32 {
 	if x != nil {
-		return x.ByteStart
+		return x.Utf16Start
 	}
 	return 0
 }
 
-func (x *Delete) GetByteEnd() uint32 {
+func (x *Delete) GetUtf16End() uint32 {
 	if x != nil {
-		return x.ByteEnd
+		return x.Utf16End
 	}
 	return 0
 }
@@ -1063,44 +1063,55 @@ var File_lrc_proto protoreflect.FileDescriptor
 
 const file_lrc_proto_rawDesc = "" +
 	"\n" +
-	"\tlrc.proto\"\xaa\x03\n" +
-	"\x05Event\x12\x1b\n" +
-	"\x04ping\x18\x01 \x01(\v2\x05.PingH\x00R\x04ping\x12\x1b\n" +
-	"\x04pong\x18\x02 \x01(\v2\x05.PongH\x00R\x04pong\x12\x1b\n" +
-	"\x04init\x18\x03 \x01(\v2\x05.InitH\x00R\x04init\x12\x18\n" +
-	"\x03pub\x18\x04 \x01(\v2\x04.PubH\x00R\x03pub\x12!\n" +
-	"\x06insert\x18\x05 \x01(\v2\a.InsertH\x00R\x06insert\x12!\n" +
-	"\x06delete\x18\x06 \x01(\v2\a.DeleteH\x00R\x06delete\x12\x1b\n" +
-	"\x04mute\x18\a \x01(\v2\x05.MuteH\x00R\x04mute\x12!\n" +
-	"\x06unmute\x18\b \x01(\v2\a.UnmuteH\x00R\x06unmute\x12\x18\n" +
-	"\x03set\x18\t \x01(\v2\x04.SetH\x00R\x03set\x12\x18\n" +
+	"\tlrc.proto\x12\x06lrc.v1\"\x8c\x04\n" +
+	"\x05Event\x12\"\n" +
+	"\x04ping\x18\x01 \x01(\v2\f.lrc.v1.PingH\x00R\x04ping\x12\"\n" +
+	"\x04pong\x18\x02 \x01(\v2\f.lrc.v1.PongH\x00R\x04pong\x12\"\n" +
+	"\x04init\x18\x03 \x01(\v2\f.lrc.v1.InitH\x00R\x04init\x12\x1f\n" +
+	"\x03pub\x18\x04 \x01(\v2\v.lrc.v1.PubH\x00R\x03pub\x12(\n" +
+	"\x06insert\x18\x05 \x01(\v2\x0e.lrc.v1.InsertH\x00R\x06insert\x12(\n" +
+	"\x06delete\x18\x06 \x01(\v2\x0e.lrc.v1.DeleteH\x00R\x06delete\x12\"\n" +
+	"\x04mute\x18\a \x01(\v2\f.lrc.v1.MuteH\x00R\x04mute\x12(\n" +
+	"\x06unmute\x18\b \x01(\v2\x0e.lrc.v1.UnmuteH\x00R\x06unmute\x12\x1f\n" +
+	"\x03set\x18\t \x01(\v2\v.lrc.v1.SetH\x00R\x03set\x12\x1f\n" +
 	"\x03get\x18\n" +
-	" \x01(\v2\x04.GetH\x00R\x03get\x12\x1b\n" +
-	"\x04kick\x18\v \x01(\v2\x05.KickH\x00R\x04kick\x12\x18\n" +
-	"\x03hug\x18\f \x01(\v2\x04.HugH\x00R\x03hug\x12\x18\n" +
-	"\x03ban\x18\r \x01(\v2\x04.BanH\x00R\x03ban\x12\x1e\n" +
-	"\x05unban\x18\x0e \x01(\v2\x06.UnbanH\x00R\x05unbanB\x05\n" +
+	" \x01(\v2\v.lrc.v1.GetH\x00R\x03get\x12\"\n" +
+	"\x04kick\x18\v \x01(\v2\f.lrc.v1.KickH\x00R\x04kick\x12\x1f\n" +
+	"\x03hug\x18\f \x01(\v2\v.lrc.v1.HugH\x00R\x03hug\x12\x1f\n" +
+	"\x03ban\x18\r \x01(\v2\v.lrc.v1.BanH\x00R\x03ban\x12%\n" +
+	"\x05unban\x18\x0e \x01(\v2\r.lrc.v1.UnbanH\x00R\x05unbanB\x05\n" +
 	"\x03msg\"\x06\n" +
 	"\x04Ping\"\x06\n" +
-	"\x04Pong\"x\n" +
-	"\x04Init\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
-	"\x04nick\x18\x02 \x01(\tR\x04nick\x12\x1e\n" +
+	"\x04Pong\"\xc5\x01\n" +
+	"\x04Init\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x17\n" +
+	"\x04nick\x18\x02 \x01(\tH\x01R\x04nick\x88\x01\x01\x12#\n" +
 	"\n" +
-	"externalID\x18\x03 \x01(\tR\n" +
-	"externalID\x12\x14\n" +
-	"\x05color\x18\x04 \x01(\rR\x05color\x12\x16\n" +
-	"\x06echoed\x18\x05 \x01(\bR\x06echoed\"\x15\n" +
+	"externalID\x18\x03 \x01(\tH\x02R\n" +
+	"externalID\x88\x01\x01\x12\x19\n" +
+	"\x05color\x18\x04 \x01(\rH\x03R\x05color\x88\x01\x01\x12\x1b\n" +
+	"\x06echoed\x18\x05 \x01(\bH\x04R\x06echoed\x88\x01\x01B\x05\n" +
+	"\x03_idB\a\n" +
+	"\x05_nickB\r\n" +
+	"\v_externalIDB\b\n" +
+	"\x06_colorB\t\n" +
+	"\a_echoed\"\x15\n" +
 	"\x03Pub\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"J\n" +
-	"\x06Insert\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x12\n" +
-	"\x04body\x18\x02 \x01(\tR\x04body\x12\x1c\n" +
-	"\tbyteIndex\x18\x03 \x01(\rR\tbyteIndex\"P\n" +
-	"\x06Delete\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\x12\x1c\n" +
-	"\tbyteStart\x18\x02 \x01(\rR\tbyteStart\x12\x18\n" +
-	"\abyteEnd\x18\x03 \x01(\rR\abyteEnd\"\x16\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"X\n" +
+	"\x06Insert\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x12\n" +
+	"\x04body\x18\x02 \x01(\tR\x04body\x12\x1e\n" +
+	"\n" +
+	"utf16Index\x18\x03 \x01(\rR\n" +
+	"utf16IndexB\x05\n" +
+	"\x03_id\"`\n" +
+	"\x06Delete\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x1e\n" +
+	"\n" +
+	"utf16Start\x18\x02 \x01(\rR\n" +
+	"utf16Start\x12\x1a\n" +
+	"\butf16End\x18\x03 \x01(\rR\butf16EndB\x05\n" +
+	"\x03_id\"\x16\n" +
 	"\x04Mute\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\rR\x02id\"\x18\n" +
 	"\x06Unmute\x12\x0e\n" +
@@ -1124,22 +1135,22 @@ const file_lrc_proto_rawDesc = "" +
 	"\n" +
 	"externalID\x18\x01 \x01(\tR\n" +
 	"externalID\x12\x16\n" +
-	"\x06secret\x18\x02 \x01(\tR\x06secret\"=\n" +
-	"\x04Kick\x12%\n" +
+	"\x06secret\x18\x02 \x01(\tR\x06secret\"D\n" +
+	"\x04Kick\x12,\n" +
 	"\n" +
-	"privileges\x18\x01 \x01(\v2\x05.SudoR\n" +
+	"privileges\x18\x01 \x01(\v2\f.lrc.v1.SudoR\n" +
 	"privileges\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\rR\x02id\"\x15\n" +
 	"\x03Hug\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\rR\x02id\"<\n" +
-	"\x03Ban\x12%\n" +
+	"\x02id\x18\x01 \x01(\rR\x02id\"C\n" +
+	"\x03Ban\x12,\n" +
 	"\n" +
-	"privileges\x18\x01 \x01(\v2\x05.SudoR\n" +
+	"privileges\x18\x01 \x01(\v2\f.lrc.v1.SudoR\n" +
 	"privileges\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\rR\x02id\">\n" +
-	"\x05Unban\x12%\n" +
+	"\x02id\x18\x02 \x01(\rR\x02id\"E\n" +
+	"\x05Unban\x12,\n" +
 	"\n" +
-	"privileges\x18\x01 \x01(\v2\x05.SudoR\n" +
+	"privileges\x18\x01 \x01(\v2\f.lrc.v1.SudoR\n" +
 	"privileges\x12\x0e\n" +
 	"\x02id\x18\x02 \x01(\rR\x02idB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
 
@@ -1157,41 +1168,41 @@ func file_lrc_proto_rawDescGZIP() []byte {
 
 var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_lrc_proto_goTypes = []any{
-	(*Event)(nil),  // 0: Event
-	(*Ping)(nil),   // 1: Ping
-	(*Pong)(nil),   // 2: Pong
-	(*Init)(nil),   // 3: Init
-	(*Pub)(nil),    // 4: Pub
-	(*Insert)(nil), // 5: Insert
-	(*Delete)(nil), // 6: Delete
-	(*Mute)(nil),   // 7: Mute
-	(*Unmute)(nil), // 8: Unmute
-	(*Set)(nil),    // 9: Set
-	(*Get)(nil),    // 10: Get
-	(*Sudo)(nil),   // 11: Sudo
-	(*Kick)(nil),   // 12: Kick
-	(*Hug)(nil),    // 13: Hug
-	(*Ban)(nil),    // 14: Ban
-	(*Unban)(nil),  // 15: Unban
+	(*Event)(nil),  // 0: lrc.v1.Event
+	(*Ping)(nil),   // 1: lrc.v1.Ping
+	(*Pong)(nil),   // 2: lrc.v1.Pong
+	(*Init)(nil),   // 3: lrc.v1.Init
+	(*Pub)(nil),    // 4: lrc.v1.Pub
+	(*Insert)(nil), // 5: lrc.v1.Insert
+	(*Delete)(nil), // 6: lrc.v1.Delete
+	(*Mute)(nil),   // 7: lrc.v1.Mute
+	(*Unmute)(nil), // 8: lrc.v1.Unmute
+	(*Set)(nil),    // 9: lrc.v1.Set
+	(*Get)(nil),    // 10: lrc.v1.Get
+	(*Sudo)(nil),   // 11: lrc.v1.Sudo
+	(*Kick)(nil),   // 12: lrc.v1.Kick
+	(*Hug)(nil),    // 13: lrc.v1.Hug
+	(*Ban)(nil),    // 14: lrc.v1.Ban
+	(*Unban)(nil),  // 15: lrc.v1.Unban
 }
 var file_lrc_proto_depIdxs = []int32{
-	1,  // 0: Event.ping:type_name -> Ping
-	2,  // 1: Event.pong:type_name -> Pong
-	3,  // 2: Event.init:type_name -> Init
-	4,  // 3: Event.pub:type_name -> Pub
-	5,  // 4: Event.insert:type_name -> Insert
-	6,  // 5: Event.delete:type_name -> Delete
-	7,  // 6: Event.mute:type_name -> Mute
-	8,  // 7: Event.unmute:type_name -> Unmute
-	9,  // 8: Event.set:type_name -> Set
-	10, // 9: Event.get:type_name -> Get
-	12, // 10: Event.kick:type_name -> Kick
-	13, // 11: Event.hug:type_name -> Hug
-	14, // 12: Event.ban:type_name -> Ban
-	15, // 13: Event.unban:type_name -> Unban
-	11, // 14: Kick.privileges:type_name -> Sudo
-	11, // 15: Ban.privileges:type_name -> Sudo
-	11, // 16: Unban.privileges:type_name -> Sudo
+	1,  // 0: lrc.v1.Event.ping:type_name -> lrc.v1.Ping
+	2,  // 1: lrc.v1.Event.pong:type_name -> lrc.v1.Pong
+	3,  // 2: lrc.v1.Event.init:type_name -> lrc.v1.Init
+	4,  // 3: lrc.v1.Event.pub:type_name -> lrc.v1.Pub
+	5,  // 4: lrc.v1.Event.insert:type_name -> lrc.v1.Insert
+	6,  // 5: lrc.v1.Event.delete:type_name -> lrc.v1.Delete
+	7,  // 6: lrc.v1.Event.mute:type_name -> lrc.v1.Mute
+	8,  // 7: lrc.v1.Event.unmute:type_name -> lrc.v1.Unmute
+	9,  // 8: lrc.v1.Event.set:type_name -> lrc.v1.Set
+	10, // 9: lrc.v1.Event.get:type_name -> lrc.v1.Get
+	12, // 10: lrc.v1.Event.kick:type_name -> lrc.v1.Kick
+	13, // 11: lrc.v1.Event.hug:type_name -> lrc.v1.Hug
+	14, // 12: lrc.v1.Event.ban:type_name -> lrc.v1.Ban
+	15, // 13: lrc.v1.Event.unban:type_name -> lrc.v1.Unban
+	11, // 14: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
+	11, // 15: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
+	11, // 16: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
 	17, // [17:17] is the sub-list for method output_type
 	17, // [17:17] is the sub-list for method input_type
 	17, // [17:17] is the sub-list for extension type_name
@@ -1220,6 +1231,9 @@ func file_lrc_proto_init() {
 		(*Event_Ban)(nil),
 		(*Event_Unban)(nil),
 	}
+	file_lrc_proto_msgTypes[3].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[5].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[6].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[9].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
