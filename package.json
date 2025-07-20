@@ -1,6 +1,6 @@
 {
   "name": "@rachel-mp4/lrcproto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "protobuf definitions for LRC",
   "main": "gen/ts/lrc.ts",
   "dependencies": {
