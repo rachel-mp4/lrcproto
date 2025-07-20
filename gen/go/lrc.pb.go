@@ -374,6 +374,7 @@ type Init struct {
 	ExternalID    *string                `protobuf:"bytes,3,opt,name=externalID,proto3,oneof" json:"externalID,omitempty"`
 	Color         *uint32                `protobuf:"varint,4,opt,name=color,proto3,oneof" json:"color,omitempty"`
 	Echoed        *bool                  `protobuf:"varint,5,opt,name=echoed,proto3,oneof" json:"echoed,omitempty"`
+	Nonce         []byte                 `protobuf:"bytes,6,opt,name=nonce,proto3,oneof" json:"nonce,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -441,6 +442,13 @@ func (x *Init) GetEchoed() bool {
 		return *x.Echoed
 	}
 	return false
+}
+
+func (x *Init) GetNonce() []byte {
+	if x != nil {
+		return x.Nonce
+	}
+	return nil
 }
 
 type Pub struct {
@@ -1082,7 +1090,7 @@ const file_lrc_proto_rawDesc = "" +
 	"\x05unban\x18\x0e \x01(\v2\r.lrc.v1.UnbanH\x00R\x05unbanB\x05\n" +
 	"\x03msg\"\x06\n" +
 	"\x04Ping\"\x06\n" +
-	"\x04Pong\"\xc5\x01\n" +
+	"\x04Pong\"\xea\x01\n" +
 	"\x04Init\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x17\n" +
 	"\x04nick\x18\x02 \x01(\tH\x01R\x04nick\x88\x01\x01\x12#\n" +
@@ -1090,12 +1098,14 @@ const file_lrc_proto_rawDesc = "" +
 	"externalID\x18\x03 \x01(\tH\x02R\n" +
 	"externalID\x88\x01\x01\x12\x19\n" +
 	"\x05color\x18\x04 \x01(\rH\x03R\x05color\x88\x01\x01\x12\x1b\n" +
-	"\x06echoed\x18\x05 \x01(\bH\x04R\x06echoed\x88\x01\x01B\x05\n" +
+	"\x06echoed\x18\x05 \x01(\bH\x04R\x06echoed\x88\x01\x01\x12\x19\n" +
+	"\x05nonce\x18\x06 \x01(\fH\x05R\x05nonce\x88\x01\x01B\x05\n" +
 	"\x03_idB\a\n" +
 	"\x05_nickB\r\n" +
 	"\v_externalIDB\b\n" +
 	"\x06_colorB\t\n" +
-	"\a_echoed\"!\n" +
+	"\a_echoedB\b\n" +
+	"\x06_nonce\"!\n" +
 	"\x03Pub\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01B\x05\n" +
 	"\x03_id\"X\n" +

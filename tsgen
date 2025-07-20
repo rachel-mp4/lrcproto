@@ -1,0 +1,9 @@
+#!/bin/bash
+
+npx protoc \
+  --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
+  --ts_out=./gen/ts \
+  --ts_opt long_type_string \
+  --ts_opt optimize_code_size \
+  --proto_path . \
+  lrc.proto
