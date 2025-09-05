@@ -1067,6 +1067,50 @@ func (x *Unban) GetId() uint32 {
 	return 0
 }
 
+type BatchEvent struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Events        []*Event               `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchEvent) Reset() {
+	*x = BatchEvent{}
+	mi := &file_lrc_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchEvent) ProtoMessage() {}
+
+func (x *BatchEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_lrc_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchEvent.ProtoReflect.Descriptor instead.
+func (*BatchEvent) Descriptor() ([]byte, []int) {
+	return file_lrc_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *BatchEvent) GetEvents() []*Event {
+	if x != nil {
+		return x.Events
+	}
+	return nil
+}
+
 var File_lrc_proto protoreflect.FileDescriptor
 
 const file_lrc_proto_rawDesc = "" +
@@ -1163,7 +1207,10 @@ const file_lrc_proto_rawDesc = "" +
 	"\n" +
 	"privileges\x18\x01 \x01(\v2\f.lrc.v1.SudoR\n" +
 	"privileges\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\rR\x02idB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
+	"\x02id\x18\x02 \x01(\rR\x02id\"3\n" +
+	"\n" +
+	"BatchEvent\x12%\n" +
+	"\x06events\x18\x01 \x03(\v2\r.lrc.v1.EventR\x06eventsB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
 
 var (
 	file_lrc_proto_rawDescOnce sync.Once
@@ -1177,24 +1224,25 @@ func file_lrc_proto_rawDescGZIP() []byte {
 	return file_lrc_proto_rawDescData
 }
 
-var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_lrc_proto_goTypes = []any{
-	(*Event)(nil),  // 0: lrc.v1.Event
-	(*Ping)(nil),   // 1: lrc.v1.Ping
-	(*Pong)(nil),   // 2: lrc.v1.Pong
-	(*Init)(nil),   // 3: lrc.v1.Init
-	(*Pub)(nil),    // 4: lrc.v1.Pub
-	(*Insert)(nil), // 5: lrc.v1.Insert
-	(*Delete)(nil), // 6: lrc.v1.Delete
-	(*Mute)(nil),   // 7: lrc.v1.Mute
-	(*Unmute)(nil), // 8: lrc.v1.Unmute
-	(*Set)(nil),    // 9: lrc.v1.Set
-	(*Get)(nil),    // 10: lrc.v1.Get
-	(*Sudo)(nil),   // 11: lrc.v1.Sudo
-	(*Kick)(nil),   // 12: lrc.v1.Kick
-	(*Hug)(nil),    // 13: lrc.v1.Hug
-	(*Ban)(nil),    // 14: lrc.v1.Ban
-	(*Unban)(nil),  // 15: lrc.v1.Unban
+	(*Event)(nil),      // 0: lrc.v1.Event
+	(*Ping)(nil),       // 1: lrc.v1.Ping
+	(*Pong)(nil),       // 2: lrc.v1.Pong
+	(*Init)(nil),       // 3: lrc.v1.Init
+	(*Pub)(nil),        // 4: lrc.v1.Pub
+	(*Insert)(nil),     // 5: lrc.v1.Insert
+	(*Delete)(nil),     // 6: lrc.v1.Delete
+	(*Mute)(nil),       // 7: lrc.v1.Mute
+	(*Unmute)(nil),     // 8: lrc.v1.Unmute
+	(*Set)(nil),        // 9: lrc.v1.Set
+	(*Get)(nil),        // 10: lrc.v1.Get
+	(*Sudo)(nil),       // 11: lrc.v1.Sudo
+	(*Kick)(nil),       // 12: lrc.v1.Kick
+	(*Hug)(nil),        // 13: lrc.v1.Hug
+	(*Ban)(nil),        // 14: lrc.v1.Ban
+	(*Unban)(nil),      // 15: lrc.v1.Unban
+	(*BatchEvent)(nil), // 16: lrc.v1.BatchEvent
 }
 var file_lrc_proto_depIdxs = []int32{
 	1,  // 0: lrc.v1.Event.ping:type_name -> lrc.v1.Ping
@@ -1214,11 +1262,12 @@ var file_lrc_proto_depIdxs = []int32{
 	11, // 14: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
 	11, // 15: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
 	11, // 16: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	0,  // 17: lrc.v1.BatchEvent.events:type_name -> lrc.v1.Event
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_lrc_proto_init() }
@@ -1254,7 +1303,7 @@ func file_lrc_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_lrc_proto_rawDesc), len(file_lrc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

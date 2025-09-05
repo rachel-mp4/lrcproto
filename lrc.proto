@@ -84,3 +84,5 @@ message Unban {
   Sudo privileges = 1;
   uint32 id = 2;
 }
+
+message BatchEvent { repeated Event events = 1; }

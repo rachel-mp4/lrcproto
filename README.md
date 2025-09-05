@@ -2,6 +2,23 @@
 
 This repository defines the LRC protocol message schema using Protocol Buffers and provides generated code for both **TypeScript** and **Go**.
 
+
+## Generation
+these may work idrk
+
+### Typescript
+```
+npx protoc \
+  --ts_out gen/ts \
+  --proto_path . \
+  lrc.proto
+```
+
+### Go
+```
+protoc --go_out=gen/go --go_opt=paths=source_relative lrc.proto
+```
+
 ## Installation
 
 ### TypeScript
