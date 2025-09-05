@@ -102,8 +102,18 @@ export interface Event {
          */
         unban: Unban;
     } | {
+        oneofKind: "editbatch";
+        /**
+         * @generated from protobuf field: lrc.v1.EditBatch editbatch = 15;
+         */
+        editbatch: EditBatch;
+    } | {
         oneofKind: undefined;
     };
+    /**
+     * @generated from protobuf field: optional uint32 id = 16;
+     */
+    id?: number;
 }
 /**
  * @generated from protobuf message lrc.v1.Ping
@@ -297,13 +307,36 @@ export interface Unban {
     id: number;
 }
 /**
- * @generated from protobuf message lrc.v1.BatchEvent
+ * @generated from protobuf message lrc.v1.Edit
  */
-export interface BatchEvent {
+export interface Edit {
     /**
-     * @generated from protobuf field: repeated lrc.v1.Event events = 1;
+     * @generated from protobuf oneof: edit
      */
-    events: Event[];
+    edit: {
+        oneofKind: "insert";
+        /**
+         * @generated from protobuf field: lrc.v1.Insert insert = 1;
+         */
+        insert: Insert;
+    } | {
+        oneofKind: "delete";
+        /**
+         * @generated from protobuf field: lrc.v1.Delete delete = 2;
+         */
+        delete: Delete;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message lrc.v1.EditBatch
+ */
+export interface EditBatch {
+    /**
+     * @generated from protobuf field: repeated lrc.v1.Edit edits = 1;
+     */
+    edits: Edit[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Event$Type extends MessageType<Event> {
@@ -322,7 +355,9 @@ class Event$Type extends MessageType<Event> {
             { no: 11, name: "kick", kind: "message", oneof: "msg", T: () => Kick },
             { no: 12, name: "hug", kind: "message", oneof: "msg", T: () => Hug },
             { no: 13, name: "ban", kind: "message", oneof: "msg", T: () => Ban },
-            { no: 14, name: "unban", kind: "message", oneof: "msg", T: () => Unban }
+            { no: 14, name: "unban", kind: "message", oneof: "msg", T: () => Unban },
+            { no: 15, name: "editbatch", kind: "message", oneof: "msg", T: () => EditBatch },
+            { no: 16, name: "id", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
     create(value?: PartialMessage<Event>): Event {
@@ -421,6 +456,15 @@ class Event$Type extends MessageType<Event> {
                         unban: Unban.internalBinaryRead(reader, reader.uint32(), options, (message.msg as any).unban)
                     };
                     break;
+                case /* lrc.v1.EditBatch editbatch */ 15:
+                    message.msg = {
+                        oneofKind: "editbatch",
+                        editbatch: EditBatch.internalBinaryRead(reader, reader.uint32(), options, (message.msg as any).editbatch)
+                    };
+                    break;
+                case /* optional uint32 id */ 16:
+                    message.id = reader.uint32();
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -475,6 +519,12 @@ class Event$Type extends MessageType<Event> {
         /* lrc.v1.Unban unban = 14; */
         if (message.msg.oneofKind === "unban")
             Unban.internalBinaryWrite(message.msg.unban, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* lrc.v1.EditBatch editbatch = 15; */
+        if (message.msg.oneofKind === "editbatch")
+            EditBatch.internalBinaryWrite(message.msg.editbatch, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* optional uint32 id = 16; */
+        if (message.id !== undefined)
+            writer.tag(16, WireType.Varint).uint32(message.id);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1284,26 +1334,36 @@ class Unban$Type extends MessageType<Unban> {
  */
 export const Unban = new Unban$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class BatchEvent$Type extends MessageType<BatchEvent> {
+class Edit$Type extends MessageType<Edit> {
     constructor() {
-        super("lrc.v1.BatchEvent", [
-            { no: 1, name: "events", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Event }
+        super("lrc.v1.Edit", [
+            { no: 1, name: "insert", kind: "message", oneof: "edit", T: () => Insert },
+            { no: 2, name: "delete", kind: "message", oneof: "edit", T: () => Delete }
         ]);
     }
-    create(value?: PartialMessage<BatchEvent>): BatchEvent {
+    create(value?: PartialMessage<Edit>): Edit {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.events = [];
+        message.edit = { oneofKind: undefined };
         if (value !== undefined)
-            reflectionMergePartial<BatchEvent>(this, message, value);
+            reflectionMergePartial<Edit>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BatchEvent): BatchEvent {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Edit): Edit {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated lrc.v1.Event events */ 1:
-                    message.events.push(Event.internalBinaryRead(reader, reader.uint32(), options));
+                case /* lrc.v1.Insert insert */ 1:
+                    message.edit = {
+                        oneofKind: "insert",
+                        insert: Insert.internalBinaryRead(reader, reader.uint32(), options, (message.edit as any).insert)
+                    };
+                    break;
+                case /* lrc.v1.Delete delete */ 2:
+                    message.edit = {
+                        oneofKind: "delete",
+                        delete: Delete.internalBinaryRead(reader, reader.uint32(), options, (message.edit as any).delete)
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1316,10 +1376,13 @@ class BatchEvent$Type extends MessageType<BatchEvent> {
         }
         return message;
     }
-    internalBinaryWrite(message: BatchEvent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated lrc.v1.Event events = 1; */
-        for (let i = 0; i < message.events.length; i++)
-            Event.internalBinaryWrite(message.events[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: Edit, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* lrc.v1.Insert insert = 1; */
+        if (message.edit.oneofKind === "insert")
+            Insert.internalBinaryWrite(message.edit.insert, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* lrc.v1.Delete delete = 2; */
+        if (message.edit.oneofKind === "delete")
+            Delete.internalBinaryWrite(message.edit.delete, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1327,6 +1390,53 @@ class BatchEvent$Type extends MessageType<BatchEvent> {
     }
 }
 /**
- * @generated MessageType for protobuf message lrc.v1.BatchEvent
+ * @generated MessageType for protobuf message lrc.v1.Edit
  */
-export const BatchEvent = new BatchEvent$Type();
+export const Edit = new Edit$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class EditBatch$Type extends MessageType<EditBatch> {
+    constructor() {
+        super("lrc.v1.EditBatch", [
+            { no: 1, name: "edits", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Edit }
+        ]);
+    }
+    create(value?: PartialMessage<EditBatch>): EditBatch {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.edits = [];
+        if (value !== undefined)
+            reflectionMergePartial<EditBatch>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EditBatch): EditBatch {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated lrc.v1.Edit edits */ 1:
+                    message.edits.push(Edit.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EditBatch, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated lrc.v1.Edit edits = 1; */
+        for (let i = 0; i < message.edits.length; i++)
+            Edit.internalBinaryWrite(message.edits[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message lrc.v1.EditBatch
+ */
+export const EditBatch = new EditBatch$Type();

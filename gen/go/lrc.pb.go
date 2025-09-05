@@ -39,7 +39,9 @@ type Event struct {
 	//	*Event_Hug
 	//	*Event_Ban
 	//	*Event_Unban
+	//	*Event_Editbatch
 	Msg           isEvent_Msg `protobuf_oneof:"msg"`
+	Id            *uint32     `protobuf:"varint,16,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -207,6 +209,22 @@ func (x *Event) GetUnban() *Unban {
 	return nil
 }
 
+func (x *Event) GetEditbatch() *EditBatch {
+	if x != nil {
+		if x, ok := x.Msg.(*Event_Editbatch); ok {
+			return x.Editbatch
+		}
+	}
+	return nil
+}
+
+func (x *Event) GetId() uint32 {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return 0
+}
+
 type isEvent_Msg interface {
 	isEvent_Msg()
 }
@@ -267,6 +285,10 @@ type Event_Unban struct {
 	Unban *Unban `protobuf:"bytes,14,opt,name=unban,proto3,oneof"`
 }
 
+type Event_Editbatch struct {
+	Editbatch *EditBatch `protobuf:"bytes,15,opt,name=editbatch,proto3,oneof"`
+}
+
 func (*Event_Ping) isEvent_Msg() {}
 
 func (*Event_Pong) isEvent_Msg() {}
@@ -294,6 +316,8 @@ func (*Event_Hug) isEvent_Msg() {}
 func (*Event_Ban) isEvent_Msg() {}
 
 func (*Event_Unban) isEvent_Msg() {}
+
+func (*Event_Editbatch) isEvent_Msg() {}
 
 type Ping struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1067,27 +1091,31 @@ func (x *Unban) GetId() uint32 {
 	return 0
 }
 
-type BatchEvent struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Events        []*Event               `protobuf:"bytes,1,rep,name=events,proto3" json:"events,omitempty"`
+type Edit struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Edit:
+	//
+	//	*Edit_Insert
+	//	*Edit_Delete
+	Edit          isEdit_Edit `protobuf_oneof:"edit"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *BatchEvent) Reset() {
-	*x = BatchEvent{}
+func (x *Edit) Reset() {
+	*x = Edit{}
 	mi := &file_lrc_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BatchEvent) String() string {
+func (x *Edit) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BatchEvent) ProtoMessage() {}
+func (*Edit) ProtoMessage() {}
 
-func (x *BatchEvent) ProtoReflect() protoreflect.Message {
+func (x *Edit) ProtoReflect() protoreflect.Message {
 	mi := &file_lrc_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1099,14 +1127,92 @@ func (x *BatchEvent) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BatchEvent.ProtoReflect.Descriptor instead.
-func (*BatchEvent) Descriptor() ([]byte, []int) {
+// Deprecated: Use Edit.ProtoReflect.Descriptor instead.
+func (*Edit) Descriptor() ([]byte, []int) {
 	return file_lrc_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *BatchEvent) GetEvents() []*Event {
+func (x *Edit) GetEdit() isEdit_Edit {
 	if x != nil {
-		return x.Events
+		return x.Edit
+	}
+	return nil
+}
+
+func (x *Edit) GetInsert() *Insert {
+	if x != nil {
+		if x, ok := x.Edit.(*Edit_Insert); ok {
+			return x.Insert
+		}
+	}
+	return nil
+}
+
+func (x *Edit) GetDelete() *Delete {
+	if x != nil {
+		if x, ok := x.Edit.(*Edit_Delete); ok {
+			return x.Delete
+		}
+	}
+	return nil
+}
+
+type isEdit_Edit interface {
+	isEdit_Edit()
+}
+
+type Edit_Insert struct {
+	Insert *Insert `protobuf:"bytes,1,opt,name=insert,proto3,oneof"`
+}
+
+type Edit_Delete struct {
+	Delete *Delete `protobuf:"bytes,2,opt,name=delete,proto3,oneof"`
+}
+
+func (*Edit_Insert) isEdit_Edit() {}
+
+func (*Edit_Delete) isEdit_Edit() {}
+
+type EditBatch struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Edits         []*Edit                `protobuf:"bytes,1,rep,name=edits,proto3" json:"edits,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EditBatch) Reset() {
+	*x = EditBatch{}
+	mi := &file_lrc_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EditBatch) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EditBatch) ProtoMessage() {}
+
+func (x *EditBatch) ProtoReflect() protoreflect.Message {
+	mi := &file_lrc_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EditBatch.ProtoReflect.Descriptor instead.
+func (*EditBatch) Descriptor() ([]byte, []int) {
+	return file_lrc_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *EditBatch) GetEdits() []*Edit {
+	if x != nil {
+		return x.Edits
 	}
 	return nil
 }
@@ -1115,7 +1221,7 @@ var File_lrc_proto protoreflect.FileDescriptor
 
 const file_lrc_proto_rawDesc = "" +
 	"\n" +
-	"\tlrc.proto\x12\x06lrc.v1\"\x8c\x04\n" +
+	"\tlrc.proto\x12\x06lrc.v1\"\xdb\x04\n" +
 	"\x05Event\x12\"\n" +
 	"\x04ping\x18\x01 \x01(\v2\f.lrc.v1.PingH\x00R\x04ping\x12\"\n" +
 	"\x04pong\x18\x02 \x01(\v2\f.lrc.v1.PongH\x00R\x04pong\x12\"\n" +
@@ -1131,8 +1237,11 @@ const file_lrc_proto_rawDesc = "" +
 	"\x04kick\x18\v \x01(\v2\f.lrc.v1.KickH\x00R\x04kick\x12\x1f\n" +
 	"\x03hug\x18\f \x01(\v2\v.lrc.v1.HugH\x00R\x03hug\x12\x1f\n" +
 	"\x03ban\x18\r \x01(\v2\v.lrc.v1.BanH\x00R\x03ban\x12%\n" +
-	"\x05unban\x18\x0e \x01(\v2\r.lrc.v1.UnbanH\x00R\x05unbanB\x05\n" +
-	"\x03msg\"\x06\n" +
+	"\x05unban\x18\x0e \x01(\v2\r.lrc.v1.UnbanH\x00R\x05unban\x121\n" +
+	"\teditbatch\x18\x0f \x01(\v2\x11.lrc.v1.EditBatchH\x00R\teditbatch\x12\x13\n" +
+	"\x02id\x18\x10 \x01(\rH\x01R\x02id\x88\x01\x01B\x05\n" +
+	"\x03msgB\x05\n" +
+	"\x03_id\"\x06\n" +
 	"\x04Ping\"\x06\n" +
 	"\x04Pong\"\xea\x01\n" +
 	"\x04Init\x12\x13\n" +
@@ -1207,10 +1316,13 @@ const file_lrc_proto_rawDesc = "" +
 	"\n" +
 	"privileges\x18\x01 \x01(\v2\f.lrc.v1.SudoR\n" +
 	"privileges\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\rR\x02id\"3\n" +
-	"\n" +
-	"BatchEvent\x12%\n" +
-	"\x06events\x18\x01 \x03(\v2\r.lrc.v1.EventR\x06eventsB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
+	"\x02id\x18\x02 \x01(\rR\x02id\"b\n" +
+	"\x04Edit\x12(\n" +
+	"\x06insert\x18\x01 \x01(\v2\x0e.lrc.v1.InsertH\x00R\x06insert\x12(\n" +
+	"\x06delete\x18\x02 \x01(\v2\x0e.lrc.v1.DeleteH\x00R\x06deleteB\x06\n" +
+	"\x04edit\"/\n" +
+	"\tEditBatch\x12\"\n" +
+	"\x05edits\x18\x01 \x03(\v2\f.lrc.v1.EditR\x05editsB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
 
 var (
 	file_lrc_proto_rawDescOnce sync.Once
@@ -1224,25 +1336,26 @@ func file_lrc_proto_rawDescGZIP() []byte {
 	return file_lrc_proto_rawDescData
 }
 
-var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_lrc_proto_goTypes = []any{
-	(*Event)(nil),      // 0: lrc.v1.Event
-	(*Ping)(nil),       // 1: lrc.v1.Ping
-	(*Pong)(nil),       // 2: lrc.v1.Pong
-	(*Init)(nil),       // 3: lrc.v1.Init
-	(*Pub)(nil),        // 4: lrc.v1.Pub
-	(*Insert)(nil),     // 5: lrc.v1.Insert
-	(*Delete)(nil),     // 6: lrc.v1.Delete
-	(*Mute)(nil),       // 7: lrc.v1.Mute
-	(*Unmute)(nil),     // 8: lrc.v1.Unmute
-	(*Set)(nil),        // 9: lrc.v1.Set
-	(*Get)(nil),        // 10: lrc.v1.Get
-	(*Sudo)(nil),       // 11: lrc.v1.Sudo
-	(*Kick)(nil),       // 12: lrc.v1.Kick
-	(*Hug)(nil),        // 13: lrc.v1.Hug
-	(*Ban)(nil),        // 14: lrc.v1.Ban
-	(*Unban)(nil),      // 15: lrc.v1.Unban
-	(*BatchEvent)(nil), // 16: lrc.v1.BatchEvent
+	(*Event)(nil),     // 0: lrc.v1.Event
+	(*Ping)(nil),      // 1: lrc.v1.Ping
+	(*Pong)(nil),      // 2: lrc.v1.Pong
+	(*Init)(nil),      // 3: lrc.v1.Init
+	(*Pub)(nil),       // 4: lrc.v1.Pub
+	(*Insert)(nil),    // 5: lrc.v1.Insert
+	(*Delete)(nil),    // 6: lrc.v1.Delete
+	(*Mute)(nil),      // 7: lrc.v1.Mute
+	(*Unmute)(nil),    // 8: lrc.v1.Unmute
+	(*Set)(nil),       // 9: lrc.v1.Set
+	(*Get)(nil),       // 10: lrc.v1.Get
+	(*Sudo)(nil),      // 11: lrc.v1.Sudo
+	(*Kick)(nil),      // 12: lrc.v1.Kick
+	(*Hug)(nil),       // 13: lrc.v1.Hug
+	(*Ban)(nil),       // 14: lrc.v1.Ban
+	(*Unban)(nil),     // 15: lrc.v1.Unban
+	(*Edit)(nil),      // 16: lrc.v1.Edit
+	(*EditBatch)(nil), // 17: lrc.v1.EditBatch
 }
 var file_lrc_proto_depIdxs = []int32{
 	1,  // 0: lrc.v1.Event.ping:type_name -> lrc.v1.Ping
@@ -1259,15 +1372,18 @@ var file_lrc_proto_depIdxs = []int32{
 	13, // 11: lrc.v1.Event.hug:type_name -> lrc.v1.Hug
 	14, // 12: lrc.v1.Event.ban:type_name -> lrc.v1.Ban
 	15, // 13: lrc.v1.Event.unban:type_name -> lrc.v1.Unban
-	11, // 14: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
-	11, // 15: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
-	11, // 16: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
-	0,  // 17: lrc.v1.BatchEvent.events:type_name -> lrc.v1.Event
-	18, // [18:18] is the sub-list for method output_type
-	18, // [18:18] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	17, // 14: lrc.v1.Event.editbatch:type_name -> lrc.v1.EditBatch
+	11, // 15: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
+	11, // 16: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
+	11, // 17: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
+	5,  // 18: lrc.v1.Edit.insert:type_name -> lrc.v1.Insert
+	6,  // 19: lrc.v1.Edit.delete:type_name -> lrc.v1.Delete
+	16, // 20: lrc.v1.EditBatch.edits:type_name -> lrc.v1.Edit
+	21, // [21:21] is the sub-list for method output_type
+	21, // [21:21] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_lrc_proto_init() }
@@ -1290,6 +1406,7 @@ func file_lrc_proto_init() {
 		(*Event_Hug)(nil),
 		(*Event_Ban)(nil),
 		(*Event_Unban)(nil),
+		(*Event_Editbatch)(nil),
 	}
 	file_lrc_proto_msgTypes[3].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[4].OneofWrappers = []any{}
@@ -1297,13 +1414,17 @@ func file_lrc_proto_init() {
 	file_lrc_proto_msgTypes[6].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[9].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[10].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[16].OneofWrappers = []any{
+		(*Edit_Insert)(nil),
+		(*Edit_Delete)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_lrc_proto_rawDesc), len(file_lrc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
