@@ -338,6 +338,52 @@ export interface EditBatch {
      */
     edits: Edit[];
 }
+/**
+ * @generated from protobuf message lrc.v1.MediaInit
+ */
+export interface MediaInit {
+    /**
+     * @generated from protobuf field: optional uint32 id = 1;
+     */
+    id?: number;
+    /**
+     * @generated from protobuf field: optional string nick = 2;
+     */
+    nick?: string;
+    /**
+     * @generated from protobuf field: optional string externalID = 3;
+     */
+    externalID?: string;
+    /**
+     * @generated from protobuf field: optional uint32 color = 4;
+     */
+    color?: number;
+    /**
+     * @generated from protobuf field: optional bool echoed = 5;
+     */
+    echoed?: boolean;
+    /**
+     * @generated from protobuf field: optional bytes nonce = 6;
+     */
+    nonce?: Uint8Array;
+}
+/**
+ * @generated from protobuf message lrc.v1.MediaPub
+ */
+export interface MediaPub {
+    /**
+     * @generated from protobuf field: optional uint32 id = 1;
+     */
+    id?: number;
+    /**
+     * @generated from protobuf field: optional string contentAddress = 2;
+     */
+    contentAddress?: string;
+    /**
+     * @generated from protobuf field: optional string alt = 3;
+     */
+    alt?: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Event$Type extends MessageType<Event> {
     constructor() {
@@ -1440,3 +1486,144 @@ class EditBatch$Type extends MessageType<EditBatch> {
  * @generated MessageType for protobuf message lrc.v1.EditBatch
  */
 export const EditBatch = new EditBatch$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MediaInit$Type extends MessageType<MediaInit> {
+    constructor() {
+        super("lrc.v1.MediaInit", [
+            { no: 1, name: "id", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nick", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "externalID", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "color", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 5, name: "echoed", kind: "scalar", opt: true, T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "nonce", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MediaInit>): MediaInit {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<MediaInit>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MediaInit): MediaInit {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* optional string nick */ 2:
+                    message.nick = reader.string();
+                    break;
+                case /* optional string externalID */ 3:
+                    message.externalID = reader.string();
+                    break;
+                case /* optional uint32 color */ 4:
+                    message.color = reader.uint32();
+                    break;
+                case /* optional bool echoed */ 5:
+                    message.echoed = reader.bool();
+                    break;
+                case /* optional bytes nonce */ 6:
+                    message.nonce = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MediaInit, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional uint32 id = 1; */
+        if (message.id !== undefined)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* optional string nick = 2; */
+        if (message.nick !== undefined)
+            writer.tag(2, WireType.LengthDelimited).string(message.nick);
+        /* optional string externalID = 3; */
+        if (message.externalID !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.externalID);
+        /* optional uint32 color = 4; */
+        if (message.color !== undefined)
+            writer.tag(4, WireType.Varint).uint32(message.color);
+        /* optional bool echoed = 5; */
+        if (message.echoed !== undefined)
+            writer.tag(5, WireType.Varint).bool(message.echoed);
+        /* optional bytes nonce = 6; */
+        if (message.nonce !== undefined)
+            writer.tag(6, WireType.LengthDelimited).bytes(message.nonce);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message lrc.v1.MediaInit
+ */
+export const MediaInit = new MediaInit$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MediaPub$Type extends MessageType<MediaPub> {
+    constructor() {
+        super("lrc.v1.MediaPub", [
+            { no: 1, name: "id", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "contentAddress", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "alt", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<MediaPub>): MediaPub {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<MediaPub>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MediaPub): MediaPub {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* optional string contentAddress */ 2:
+                    message.contentAddress = reader.string();
+                    break;
+                case /* optional string alt */ 3:
+                    message.alt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MediaPub, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional uint32 id = 1; */
+        if (message.id !== undefined)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* optional string contentAddress = 2; */
+        if (message.contentAddress !== undefined)
+            writer.tag(2, WireType.LengthDelimited).string(message.contentAddress);
+        /* optional string alt = 3; */
+        if (message.alt !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.alt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message lrc.v1.MediaPub
+ */
+export const MediaPub = new MediaPub$Type();

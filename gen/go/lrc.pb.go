@@ -1217,6 +1217,150 @@ func (x *EditBatch) GetEdits() []*Edit {
 	return nil
 }
 
+type MediaInit struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	Nick          *string                `protobuf:"bytes,2,opt,name=nick,proto3,oneof" json:"nick,omitempty"`
+	ExternalID    *string                `protobuf:"bytes,3,opt,name=externalID,proto3,oneof" json:"externalID,omitempty"`
+	Color         *uint32                `protobuf:"varint,4,opt,name=color,proto3,oneof" json:"color,omitempty"`
+	Echoed        *bool                  `protobuf:"varint,5,opt,name=echoed,proto3,oneof" json:"echoed,omitempty"`
+	Nonce         []byte                 `protobuf:"bytes,6,opt,name=nonce,proto3,oneof" json:"nonce,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MediaInit) Reset() {
+	*x = MediaInit{}
+	mi := &file_lrc_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MediaInit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MediaInit) ProtoMessage() {}
+
+func (x *MediaInit) ProtoReflect() protoreflect.Message {
+	mi := &file_lrc_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MediaInit.ProtoReflect.Descriptor instead.
+func (*MediaInit) Descriptor() ([]byte, []int) {
+	return file_lrc_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *MediaInit) GetId() uint32 {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return 0
+}
+
+func (x *MediaInit) GetNick() string {
+	if x != nil && x.Nick != nil {
+		return *x.Nick
+	}
+	return ""
+}
+
+func (x *MediaInit) GetExternalID() string {
+	if x != nil && x.ExternalID != nil {
+		return *x.ExternalID
+	}
+	return ""
+}
+
+func (x *MediaInit) GetColor() uint32 {
+	if x != nil && x.Color != nil {
+		return *x.Color
+	}
+	return 0
+}
+
+func (x *MediaInit) GetEchoed() bool {
+	if x != nil && x.Echoed != nil {
+		return *x.Echoed
+	}
+	return false
+}
+
+func (x *MediaInit) GetNonce() []byte {
+	if x != nil {
+		return x.Nonce
+	}
+	return nil
+}
+
+type MediaPub struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Id             *uint32                `protobuf:"varint,1,opt,name=id,proto3,oneof" json:"id,omitempty"`
+	ContentAddress *string                `protobuf:"bytes,2,opt,name=contentAddress,proto3,oneof" json:"contentAddress,omitempty"`
+	Alt            *string                `protobuf:"bytes,3,opt,name=alt,proto3,oneof" json:"alt,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *MediaPub) Reset() {
+	*x = MediaPub{}
+	mi := &file_lrc_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MediaPub) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MediaPub) ProtoMessage() {}
+
+func (x *MediaPub) ProtoReflect() protoreflect.Message {
+	mi := &file_lrc_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MediaPub.ProtoReflect.Descriptor instead.
+func (*MediaPub) Descriptor() ([]byte, []int) {
+	return file_lrc_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *MediaPub) GetId() uint32 {
+	if x != nil && x.Id != nil {
+		return *x.Id
+	}
+	return 0
+}
+
+func (x *MediaPub) GetContentAddress() string {
+	if x != nil && x.ContentAddress != nil {
+		return *x.ContentAddress
+	}
+	return ""
+}
+
+func (x *MediaPub) GetAlt() string {
+	if x != nil && x.Alt != nil {
+		return *x.Alt
+	}
+	return ""
+}
+
 var File_lrc_proto protoreflect.FileDescriptor
 
 const file_lrc_proto_rawDesc = "" +
@@ -1322,7 +1466,29 @@ const file_lrc_proto_rawDesc = "" +
 	"\x06delete\x18\x02 \x01(\v2\x0e.lrc.v1.DeleteH\x00R\x06deleteB\x06\n" +
 	"\x04edit\"/\n" +
 	"\tEditBatch\x12\"\n" +
-	"\x05edits\x18\x01 \x03(\v2\f.lrc.v1.EditR\x05editsB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
+	"\x05edits\x18\x01 \x03(\v2\f.lrc.v1.EditR\x05edits\"\xef\x01\n" +
+	"\tMediaInit\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12\x17\n" +
+	"\x04nick\x18\x02 \x01(\tH\x01R\x04nick\x88\x01\x01\x12#\n" +
+	"\n" +
+	"externalID\x18\x03 \x01(\tH\x02R\n" +
+	"externalID\x88\x01\x01\x12\x19\n" +
+	"\x05color\x18\x04 \x01(\rH\x03R\x05color\x88\x01\x01\x12\x1b\n" +
+	"\x06echoed\x18\x05 \x01(\bH\x04R\x06echoed\x88\x01\x01\x12\x19\n" +
+	"\x05nonce\x18\x06 \x01(\fH\x05R\x05nonce\x88\x01\x01B\x05\n" +
+	"\x03_idB\a\n" +
+	"\x05_nickB\r\n" +
+	"\v_externalIDB\b\n" +
+	"\x06_colorB\t\n" +
+	"\a_echoedB\b\n" +
+	"\x06_nonce\"\x85\x01\n" +
+	"\bMediaPub\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\rH\x00R\x02id\x88\x01\x01\x12+\n" +
+	"\x0econtentAddress\x18\x02 \x01(\tH\x01R\x0econtentAddress\x88\x01\x01\x12\x15\n" +
+	"\x03alt\x18\x03 \x01(\tH\x02R\x03alt\x88\x01\x01B\x05\n" +
+	"\x03_idB\x11\n" +
+	"\x0f_contentAddressB\x06\n" +
+	"\x04_altB3Z1github.com/rachel-mp4/lrcproto/gen/go/lrcpb;lrcpbb\x06proto3"
 
 var (
 	file_lrc_proto_rawDescOnce sync.Once
@@ -1336,7 +1502,7 @@ func file_lrc_proto_rawDescGZIP() []byte {
 	return file_lrc_proto_rawDescData
 }
 
-var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_lrc_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_lrc_proto_goTypes = []any{
 	(*Event)(nil),     // 0: lrc.v1.Event
 	(*Ping)(nil),      // 1: lrc.v1.Ping
@@ -1356,6 +1522,8 @@ var file_lrc_proto_goTypes = []any{
 	(*Unban)(nil),     // 15: lrc.v1.Unban
 	(*Edit)(nil),      // 16: lrc.v1.Edit
 	(*EditBatch)(nil), // 17: lrc.v1.EditBatch
+	(*MediaInit)(nil), // 18: lrc.v1.MediaInit
+	(*MediaPub)(nil),  // 19: lrc.v1.MediaPub
 }
 var file_lrc_proto_depIdxs = []int32{
 	1,  // 0: lrc.v1.Event.ping:type_name -> lrc.v1.Ping
@@ -1418,13 +1586,15 @@ func file_lrc_proto_init() {
 		(*Edit_Insert)(nil),
 		(*Edit_Delete)(nil),
 	}
+	file_lrc_proto_msgTypes[18].OneofWrappers = []any{}
+	file_lrc_proto_msgTypes[19].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_lrc_proto_rawDesc), len(file_lrc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   18,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

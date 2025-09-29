@@ -95,3 +95,18 @@ message Edit {
 }
 
 message EditBatch { repeated Edit edits = 1; }
+
+message MediaInit {
+  optional uint32 id = 1;
+  optional string nick = 2;
+  optional string externalID = 3;
+  optional uint32 color = 4;
+  optional bool echoed = 5;
+  optional bytes nonce = 6;
+}
+
+message MediaPub {
+  optional uint32 id = 1;
+  optional string contentAddress = 2;
+  optional string alt = 3;
+}
