@@ -108,6 +108,18 @@ export interface Event {
          */
         editbatch: EditBatch;
     } | {
+        oneofKind: "mediainit";
+        /**
+         * @generated from protobuf field: lrc.v1.MediaInit mediainit = 17;
+         */
+        mediainit: MediaInit;
+    } | {
+        oneofKind: "mediapub";
+        /**
+         * @generated from protobuf field: lrc.v1.MediaPub mediapub = 18;
+         */
+        mediapub: MediaPub;
+    } | {
         oneofKind: undefined;
     };
     /**
@@ -403,6 +415,8 @@ class Event$Type extends MessageType<Event> {
             { no: 13, name: "ban", kind: "message", oneof: "msg", T: () => Ban },
             { no: 14, name: "unban", kind: "message", oneof: "msg", T: () => Unban },
             { no: 15, name: "editbatch", kind: "message", oneof: "msg", T: () => EditBatch },
+            { no: 17, name: "mediainit", kind: "message", oneof: "msg", T: () => MediaInit },
+            { no: 18, name: "mediapub", kind: "message", oneof: "msg", T: () => MediaPub },
             { no: 16, name: "id", kind: "scalar", opt: true, T: 13 /*ScalarType.UINT32*/ }
         ]);
     }
@@ -508,6 +522,18 @@ class Event$Type extends MessageType<Event> {
                         editbatch: EditBatch.internalBinaryRead(reader, reader.uint32(), options, (message.msg as any).editbatch)
                     };
                     break;
+                case /* lrc.v1.MediaInit mediainit */ 17:
+                    message.msg = {
+                        oneofKind: "mediainit",
+                        mediainit: MediaInit.internalBinaryRead(reader, reader.uint32(), options, (message.msg as any).mediainit)
+                    };
+                    break;
+                case /* lrc.v1.MediaPub mediapub */ 18:
+                    message.msg = {
+                        oneofKind: "mediapub",
+                        mediapub: MediaPub.internalBinaryRead(reader, reader.uint32(), options, (message.msg as any).mediapub)
+                    };
+                    break;
                 case /* optional uint32 id */ 16:
                     message.id = reader.uint32();
                     break;
@@ -571,6 +597,12 @@ class Event$Type extends MessageType<Event> {
         /* optional uint32 id = 16; */
         if (message.id !== undefined)
             writer.tag(16, WireType.Varint).uint32(message.id);
+        /* lrc.v1.MediaInit mediainit = 17; */
+        if (message.msg.oneofKind === "mediainit")
+            MediaInit.internalBinaryWrite(message.msg.mediainit, writer.tag(17, WireType.LengthDelimited).fork(), options).join();
+        /* lrc.v1.MediaPub mediapub = 18; */
+        if (message.msg.oneofKind === "mediapub")
+            MediaPub.internalBinaryWrite(message.msg.mediapub, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

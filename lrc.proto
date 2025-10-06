@@ -19,6 +19,8 @@ message Event {
     Ban ban = 13;
     Unban unban = 14;
     EditBatch editbatch = 15;
+    MediaInit mediainit = 17;
+    MediaPub mediapub = 18;
   }
   optional uint32 id = 16;
 }

@@ -40,6 +40,8 @@ type Event struct {
 	//	*Event_Ban
 	//	*Event_Unban
 	//	*Event_Editbatch
+	//	*Event_Mediainit
+	//	*Event_Mediapub
 	Msg           isEvent_Msg `protobuf_oneof:"msg"`
 	Id            *uint32     `protobuf:"varint,16,opt,name=id,proto3,oneof" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -218,6 +220,24 @@ func (x *Event) GetEditbatch() *EditBatch {
 	return nil
 }
 
+func (x *Event) GetMediainit() *MediaInit {
+	if x != nil {
+		if x, ok := x.Msg.(*Event_Mediainit); ok {
+			return x.Mediainit
+		}
+	}
+	return nil
+}
+
+func (x *Event) GetMediapub() *MediaPub {
+	if x != nil {
+		if x, ok := x.Msg.(*Event_Mediapub); ok {
+			return x.Mediapub
+		}
+	}
+	return nil
+}
+
 func (x *Event) GetId() uint32 {
 	if x != nil && x.Id != nil {
 		return *x.Id
@@ -289,6 +309,14 @@ type Event_Editbatch struct {
 	Editbatch *EditBatch `protobuf:"bytes,15,opt,name=editbatch,proto3,oneof"`
 }
 
+type Event_Mediainit struct {
+	Mediainit *MediaInit `protobuf:"bytes,17,opt,name=mediainit,proto3,oneof"`
+}
+
+type Event_Mediapub struct {
+	Mediapub *MediaPub `protobuf:"bytes,18,opt,name=mediapub,proto3,oneof"`
+}
+
 func (*Event_Ping) isEvent_Msg() {}
 
 func (*Event_Pong) isEvent_Msg() {}
@@ -318,6 +346,10 @@ func (*Event_Ban) isEvent_Msg() {}
 func (*Event_Unban) isEvent_Msg() {}
 
 func (*Event_Editbatch) isEvent_Msg() {}
+
+func (*Event_Mediainit) isEvent_Msg() {}
+
+func (*Event_Mediapub) isEvent_Msg() {}
 
 type Ping struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1365,7 +1397,7 @@ var File_lrc_proto protoreflect.FileDescriptor
 
 const file_lrc_proto_rawDesc = "" +
 	"\n" +
-	"\tlrc.proto\x12\x06lrc.v1\"\xdb\x04\n" +
+	"\tlrc.proto\x12\x06lrc.v1\"\xbe\x05\n" +
 	"\x05Event\x12\"\n" +
 	"\x04ping\x18\x01 \x01(\v2\f.lrc.v1.PingH\x00R\x04ping\x12\"\n" +
 	"\x04pong\x18\x02 \x01(\v2\f.lrc.v1.PongH\x00R\x04pong\x12\"\n" +
@@ -1382,7 +1414,9 @@ const file_lrc_proto_rawDesc = "" +
 	"\x03hug\x18\f \x01(\v2\v.lrc.v1.HugH\x00R\x03hug\x12\x1f\n" +
 	"\x03ban\x18\r \x01(\v2\v.lrc.v1.BanH\x00R\x03ban\x12%\n" +
 	"\x05unban\x18\x0e \x01(\v2\r.lrc.v1.UnbanH\x00R\x05unban\x121\n" +
-	"\teditbatch\x18\x0f \x01(\v2\x11.lrc.v1.EditBatchH\x00R\teditbatch\x12\x13\n" +
+	"\teditbatch\x18\x0f \x01(\v2\x11.lrc.v1.EditBatchH\x00R\teditbatch\x121\n" +
+	"\tmediainit\x18\x11 \x01(\v2\x11.lrc.v1.MediaInitH\x00R\tmediainit\x12.\n" +
+	"\bmediapub\x18\x12 \x01(\v2\x10.lrc.v1.MediaPubH\x00R\bmediapub\x12\x13\n" +
 	"\x02id\x18\x10 \x01(\rH\x01R\x02id\x88\x01\x01B\x05\n" +
 	"\x03msgB\x05\n" +
 	"\x03_id\"\x06\n" +
@@ -1541,17 +1575,19 @@ var file_lrc_proto_depIdxs = []int32{
 	14, // 12: lrc.v1.Event.ban:type_name -> lrc.v1.Ban
 	15, // 13: lrc.v1.Event.unban:type_name -> lrc.v1.Unban
 	17, // 14: lrc.v1.Event.editbatch:type_name -> lrc.v1.EditBatch
-	11, // 15: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
-	11, // 16: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
-	11, // 17: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
-	5,  // 18: lrc.v1.Edit.insert:type_name -> lrc.v1.Insert
-	6,  // 19: lrc.v1.Edit.delete:type_name -> lrc.v1.Delete
-	16, // 20: lrc.v1.EditBatch.edits:type_name -> lrc.v1.Edit
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	18, // 15: lrc.v1.Event.mediainit:type_name -> lrc.v1.MediaInit
+	19, // 16: lrc.v1.Event.mediapub:type_name -> lrc.v1.MediaPub
+	11, // 17: lrc.v1.Kick.privileges:type_name -> lrc.v1.Sudo
+	11, // 18: lrc.v1.Ban.privileges:type_name -> lrc.v1.Sudo
+	11, // 19: lrc.v1.Unban.privileges:type_name -> lrc.v1.Sudo
+	5,  // 20: lrc.v1.Edit.insert:type_name -> lrc.v1.Insert
+	6,  // 21: lrc.v1.Edit.delete:type_name -> lrc.v1.Delete
+	16, // 22: lrc.v1.EditBatch.edits:type_name -> lrc.v1.Edit
+	23, // [23:23] is the sub-list for method output_type
+	23, // [23:23] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_lrc_proto_init() }
@@ -1575,6 +1611,8 @@ func file_lrc_proto_init() {
 		(*Event_Ban)(nil),
 		(*Event_Unban)(nil),
 		(*Event_Editbatch)(nil),
+		(*Event_Mediainit)(nil),
+		(*Event_Mediapub)(nil),
 	}
 	file_lrc_proto_msgTypes[3].OneofWrappers = []any{}
 	file_lrc_proto_msgTypes[4].OneofWrappers = []any{}
